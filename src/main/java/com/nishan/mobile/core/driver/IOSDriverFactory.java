@@ -4,20 +4,21 @@ import com.nishan.mobile.config.ConfigManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class IOSDriverFactory implements DriverFactory {
 
     @Override
-    public AppiumDriver createDriver(){
+    public AppiumDriver createDriver() {
         ConfigManager config = ConfigManager.getInstance();
         XCUITestOptions options = new XCUITestOptions();
         options.setDeviceName(config.get("ios.deviceName"));
         options.setPlatformVersion(config.get("ios.platformVersion"));
         options.setAutomationName(config.get("ios.automationName"));
         options.setBundleId(config.get("ios.bundleId"));
-         // app path same pattern as Android
+        // app path same pattern as Android
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path
         String appPath = getClass().getClassLoader().getResource("ios.app").getPath();
@@ -31,6 +32,6 @@ public class IOSDriverFactory implements DriverFactory {
             throw new RuntimeException(e);
         }
         // Step 4 — return new AndroidDriver(serverUrl, options)
-        return new IOSDriver(url,options);
+        return new IOSDriver(url, options);
     }
-    }
+}

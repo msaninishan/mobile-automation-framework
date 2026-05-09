@@ -1,7 +1,5 @@
 package com.nishan.mobile.config;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -47,9 +45,8 @@ public class ConfigManager {
 
     // Step 4 - the method everyone calls
     public String get(String key) {
-        // System property takes priority
-        // then falls back to properties file
-        return System.getProperty(key,
+        String value = System.getProperty(key,
                 properties.getProperty(key));
+        return value != null ? value.trim() : null;
     }
 }

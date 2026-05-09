@@ -1,3 +1,5 @@
+package tests;
+
 import com.nishan.mobile.core.BaseTest;
 import com.nishan.mobile.core.DriverManager;
 import io.appium.java_client.AppiumDriver;

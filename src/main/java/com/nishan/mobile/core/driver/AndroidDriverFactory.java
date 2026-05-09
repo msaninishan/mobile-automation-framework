@@ -25,7 +25,7 @@ public class AndroidDriverFactory implements DriverFactory {
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path
         String appPath = getClass().getClassLoader().getResource(config.get("android.app")).getPath();
-           options.setApp(appPath);
+        options.setApp(appPath);
         // Step 3 — build server URL
         // config.get("appium.url") → new URL(...)
         URL url = null;
@@ -35,6 +35,6 @@ public class AndroidDriverFactory implements DriverFactory {
             throw new RuntimeException(e);
         }
         // Step 4 — return new AndroidDriver(serverUrl, options)
-        return new AndroidDriver(url,options);
+        return new AndroidDriver(url, options);
     }
 }
