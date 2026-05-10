@@ -14,8 +14,7 @@ public class BasePage {
 
 
     protected boolean isAndroid() {
-        return ConfigManager.getInstance()
-                .get("platform")
+        return DriverManager.getPlatform()
                 .equalsIgnoreCase("android");
     }
 

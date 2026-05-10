@@ -11,6 +11,19 @@ public class MenuPage extends BasePage {
         return AppiumBy.accessibilityId("Login Screen");
     }
 
+    private By compatabilityScreen() {
+        return AppiumBy.id("android:id/button2");
+
+    }
+
+    public MenuPage handleCompatibilityScreen() {
+        if (isAndroid()) {
+            WaitUtility.waitForElementClickable(compatabilityScreen());
+            driver.findElement(compatabilityScreen()).click();
+        }
+        return this;
+    }
+
     public LoginPage navigateToLoginScreen() {
         WaitUtility.waitForElementClickable(menuItem());
         driver.findElement(menuItem()).click();

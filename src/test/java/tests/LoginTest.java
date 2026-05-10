@@ -12,6 +12,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void validLoginTest() {
         HomePage home = new MenuPage()
+                .handleCompatibilityScreen()
                 .navigateToLoginScreen()
                 .enterUserName(ConfigManager.getInstance().get("userName"))
                 .enterPassword(ConfigManager.getInstance().get("password"))
@@ -22,11 +23,12 @@ public class LoginTest extends BaseTest {
     @Test
     public void invalidLoginTest() {
         LoginPage home = new MenuPage()
+                .handleCompatibilityScreen()
                 .navigateToLoginScreen()
                 .enterUserName("nishan")
                 .enterPassword("nishan")
                 .loginExpectingFailure();
-        System.out.println(new LoginPage().errorMessageDisplayed());
+       // System.out.println(new LoginPage().errorMessageDisplayed());
         Assert.assertEquals("Invalid login credentials, please try again",new LoginPage().errorMessageDisplayed());
     }
 }

@@ -22,7 +22,7 @@ public class LoginPage extends BasePage {
     private By errorMessage() {
         return isAndroid()
                 ? AppiumBy.id("android:id/message")
-                : AppiumBy.accessibilityId("ios-error-id");
+                : AppiumBy.accessibilityId("Invalid login credentials, please try again");
     }
 
     public LoginPage enterUserName(String userName) {

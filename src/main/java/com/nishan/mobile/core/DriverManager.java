@@ -10,12 +10,13 @@ import java.time.Duration;
 
 public class DriverManager {
     private static final ThreadLocal<AppiumDriver> driverThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<String> platformThread = new ThreadLocal<>();
 
     private DriverManager() {
     }
 
-    public static void initDriver() {
-        String platform = ConfigManager.getInstance().get("platform");
+    public static void initDriver(String platform) {
+        platformThread.set(platform);
         DriverFactory factory;
         switch (platform.toLowerCase()) {
             case "android" -> factory = new AndroidDriverFactory();
@@ -37,11 +38,16 @@ public class DriverManager {
         return driver;
     }
 
+    public static String getPlatform() {
+        return platformThread.get();
+    }
+
     public static void quitDriver() {
 
         if (driverThreadLocal.get() != null) {
             driverThreadLocal.get().quit();
             driverThreadLocal.remove();
+            platformThread.remove();
         }
     }
 }

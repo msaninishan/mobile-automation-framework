@@ -9,27 +9,36 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    aspectj
+}
+
 dependencies {
     // ===== Core Appium =====
     implementation 'io.appium:java-client:9.2.2'
+
     // ===== Test Framework =====
     implementation 'org.testng:testng:7.9.0'
+
     // ===== Logging =====
     implementation 'org.slf4j:slf4j-api:2.0.12'
     implementation 'ch.qos.logback:logback-classic:1.5.6'
 
     // ===== Reporting =====
-    implementation 'com.aventstack:extentreports:5.1.2'
     implementation 'io.qameta.allure:allure-testng:2.25.0'
 
     // ===== Utilities =====
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
 
+    // ===== AspectJ for Allure =====
+    aspectj 'org.aspectj:aspectjweaver:1.9.20'
 }
 
+
 test {
-    useTestNG(){
+    useTestNG() {
         suites 'testng.xml'
     }
+    jvmArgs = ["-javaagent:${configurations.aspectj.asPath}"]
 }

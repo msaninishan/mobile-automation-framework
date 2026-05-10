@@ -21,7 +21,7 @@ public class IOSDriverFactory implements DriverFactory {
         // app path same pattern as Android
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path
-        String appPath = getClass().getClassLoader().getResource("ios.app").getPath();
+        String appPath = getClass().getClassLoader().getResource(config.get("ios.app")).getPath();
         options.setApp(appPath);
         // Step 3 — build server URL
         // config.get("appium.url") → new URL(...)
