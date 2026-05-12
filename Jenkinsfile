@@ -11,7 +11,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/msaninishan/mobile-automation-framework.git'
+                    url: 'https://github.com/msaninishan/mobile-automation-framework.git',
+                    credentialsId: 'github-credentials'
             }
         }
 
