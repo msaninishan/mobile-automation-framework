@@ -1,10 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        ANDROID_HOME = '/Users/nishan/Library/Android/sdk'
-        PATH = "/Users/nishan/Library/Android/sdk/platform-tools:/Users/nishan/Library/Android/sdk/emulator:/Users/nishan/.nvm/versions/node/v24.14.0/bin:${env.PATH}"
-    }
+   environment {
+       ANDROID_HOME = '/Users/nishan/Library/Android/sdk'
+       PATH = "/opt/homebrew/bin:/Users/nishan/Library/Android/sdk/platform-tools:/Users/nishan/Library/Android/sdk/emulator:/Users/nishan/.nvm/versions/node/v24.14.0/bin:${env.PATH}"
+   }
 
     stages {
 
@@ -46,11 +46,11 @@ pipeline {
             }
         }
 
-        stage('Generate Allure Report') {
-            steps {
-                sh 'allure generate allure-results --clean -o allure-report'
-            }
-        }
+       stage('Generate Allure Report') {
+           steps {
+               sh '/opt/homebrew/bin/allure generate allure-results --clean -o allure-report'
+           }
+       }
     }
 
     post {
