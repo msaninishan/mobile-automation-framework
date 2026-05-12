@@ -26,11 +26,11 @@ public class TestDataManager {
         try {
             InputStream stream = getClass()
                     .getClassLoader()
-                    .getResourceAsStream("testdata/users.json");
+                    .getResourceAsStream("testdata/Users.json");
 
             if (stream == null) {
                 throw new RuntimeException(
-                        "users.json not found in testdata/");
+                        "Users.json not found in testdata/");
             }
 
             ObjectMapper mapper = new ObjectMapper();
