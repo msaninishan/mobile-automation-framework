@@ -4,7 +4,7 @@
 <suite name="Mobile Automation Suite"
        verbose="1"
        parallel="tests"
-       thread-count="2">
+       thread-count="1">
 
     <listeners>
         <listener class-name="com.nishan.mobile.listeners.TestListener"/>
