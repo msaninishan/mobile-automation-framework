@@ -26,7 +26,7 @@ public class TestDataManager {
         try {
             InputStream stream = getClass()
                     .getClassLoader()
-                    .getResourceAsStream("testdata/Users.json");
+                    .getResourceAsStream("testdata/User.json");
 
             if (stream == null) {
                 throw new RuntimeException(
