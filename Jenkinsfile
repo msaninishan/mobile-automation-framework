@@ -42,7 +42,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                sh './gradlew test'
+                sh './gradlew test -Dexplicit.wait=30'
             }
         }
 

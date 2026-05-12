@@ -18,8 +18,12 @@ public class MenuPage extends BasePage {
 
     public MenuPage handleCompatibilityScreen() {
         if (isAndroid()) {
+            System.out.println("Looking for compatibility screen...");
+            System.out.println("Current page source: " +
+                    driver.getPageSource());
             WaitUtility.waitForElementClickable(compatabilityScreen());
             driver.findElement(compatabilityScreen()).click();
+            System.out.println("Compatibility screen dismissed");
         }
         return this;
     }
