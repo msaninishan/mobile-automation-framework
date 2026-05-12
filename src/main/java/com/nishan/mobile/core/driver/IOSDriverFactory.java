@@ -18,6 +18,7 @@ public class IOSDriverFactory implements DriverFactory {
         options.setPlatformVersion(config.get("ios.platformVersion"));
         options.setAutomationName(config.get("ios.automationName"));
         options.setBundleId(config.get("ios.bundleId"));
+        options.setNoReset(Boolean.parseBoolean(config.get("ios.noReset")));
         // app path same pattern as Android
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path

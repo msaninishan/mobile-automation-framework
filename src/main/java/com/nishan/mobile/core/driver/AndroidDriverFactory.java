@@ -21,6 +21,7 @@ public class AndroidDriverFactory implements DriverFactory {
         options.setAutomationName(config.get("android.automationName"));
         options.setAppPackage(config.get("android.appPackage"));
         options.setAppActivity(config.get("android.appActivity"));
+        options.setNoReset(Boolean.parseBoolean(config.get("android.noReset")));
 
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path
