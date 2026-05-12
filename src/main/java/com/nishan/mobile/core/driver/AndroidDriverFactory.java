@@ -40,6 +40,7 @@ public class AndroidDriverFactory implements DriverFactory {
         // config.get("appium.url") → new URL(...)
         ClientConfig clientConfig = ClientConfig.defaultConfig()
                 .baseUri(URI.create(config.get("appium.url")))
+                .connectionTimeout(Duration.ofSeconds(300))
                 .readTimeout(Duration.ofSeconds(300));
         // Step 4 — return new AndroidDriver(serverUrl, options)
         return new AndroidDriver(clientConfig, options);
