@@ -32,20 +32,30 @@ pipeline {
        stage('Start Appium Server') {
            steps {
                sh '''
+                   echo "Checking port 4723..."
+                   lsof -i :4723 || echo "Port 4723 is free"
+                   echo "Killing any existing Appium processes..."
+                   pkill -f "appium" || true
+                   sleep 3
+
+                   echo "Starting fresh Appium server..."
                    nohup appium --address 127.0.0.1 --port 4723 \
+                   --log /tmp/appium.log \
+                   --log-level info \
                    > /tmp/appium.log 2>&1 &
 
-                   echo "Waiting for Appium to be ready..."
+                   echo "Waiting for Appium..."
                    for i in $(seq 1 12); do
                        sleep 5
-                       STATUS=$(curl -s http://127.0.0.1:4723/status)
+                       STATUS=$(curl -s http://127.0.0.1:4723/status || echo "")
                        if echo "$STATUS" | grep -q "ready"; then
-                           echo "Appium is ready"
+                           echo "Appium ready after $((i*5)) seconds"
                            exit 0
                        fi
-                       echo "Attempt $i — Appium not ready yet..."
+                       echo "Attempt $i — waiting..."
                    done
-                   echo "Appium failed to start in 60 seconds"
+                   echo "Appium log:"
+                   cat /tmp/appium.log
                    exit 1
                '''
            }
