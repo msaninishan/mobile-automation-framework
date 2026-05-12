@@ -25,6 +25,12 @@ public class AndroidDriverFactory implements DriverFactory {
         options.setNoReset(Boolean.parseBoolean(config.get("android.noReset")));
         options.setNewCommandTimeout(Duration.ofSeconds(
                 Long.parseLong(config.get("appium.newCommandTimeout"))));
+        options.setUiautomator2ServerLaunchTimeout(
+                Duration.ofMillis(Long.parseLong(
+                        config.get("android.serverLaunchTimeout"))));
+        options.setUiautomator2ServerInstallTimeout(
+                Duration.ofMillis(Long.parseLong(
+                        config.get("android.serverInstallTimeout"))));
 
         // Step 2 — resolve app path from classpath
         // convert relative path from config → absolute path
