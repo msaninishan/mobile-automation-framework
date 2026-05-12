@@ -16,18 +16,18 @@ pipeline {
             }
         }
 
-        stage('Start Emulator') {
-            steps {
-                sh '''
-                    echo "Starting Android emulator..."
-                    emulator -avd Pixel_10_Pro -no-window -no-audio &
-                    echo "Waiting for emulator to boot..."
-                    adb wait-for-device
-                    adb shell while [ "$(adb shell getprop sys.boot_completed)" != "1" ]; do sleep 5; done
-                    echo "Emulator ready"
-                '''
-            }
-        }
+       stage('Start Emulator') {
+           steps {
+               sh '''
+                   echo "Starting Android emulator..."
+                   nohup emulator -avd Pixel_10_Pro -no-window -no-audio > /tmp/emulator.log 2>&1 &
+                   echo "Waiting for device..."
+                   adb wait-for-device
+                   sleep 30
+                   echo "Emulator ready"
+               '''
+           }
+       }
 
         stage('Start Appium Server') {
             steps {
@@ -55,12 +55,13 @@ pipeline {
 
     post {
         always {
-            allure([
-                includeProperties: false,
-                jdk: '',
-                results: [[path: 'allure-results']]
-            ])
-        }
+               allure([
+                   includeProperties: false,
+                   jdk: '',
+                   commandline: 'AllureCLI',
+                   results: [[path: 'allure-results']]
+               ])
+           }
 
         success {
             echo 'Pipeline completed successfully'
