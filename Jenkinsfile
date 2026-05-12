@@ -32,10 +32,10 @@ pipeline {
         stage('Start Appium Server') {
             steps {
                 sh '''
-                    echo "Starting Appium server..."
-                    appium --address 127.0.0.1 --port 4723 &
-                    sleep 5
-                    echo "Appium server started"
+                    nohup appium --address 127.0.0.1 --port 4723 > /tmp/appium.log 2>&1 &
+                    echo "Waiting for Appium to be ready..."
+                    sleep 10
+                    curl -s http://127.0.0.1:4723/status | grep -q "ready" && echo "Appium ready" || echo "Appium not ready"
                 '''
             }
         }
