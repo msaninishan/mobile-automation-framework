@@ -1,12 +1,22 @@
 package com.nishan.mobile.core;
 
 import com.nishan.mobile.config.ConfigManager;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 public class BaseTest {
+
+    @BeforeSuite
+    protected void warmUp() {
+        try {
+            String platform = System.getProperty("platform",
+                    ConfigManager.getInstance().get("platform"));
+            DriverManager.initDriver(platform);
+            System.out.println("Warm up complete");
+            DriverManager.quitDriver();
+        } catch (Exception e) {
+            System.out.println("Warm up absorbed: " + e.getMessage());
+        }
+    }
 
     @BeforeMethod
     @Parameters({"platform"})
