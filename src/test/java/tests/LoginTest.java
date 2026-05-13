@@ -30,13 +30,13 @@ public class LoginTest extends BaseTest {
         User invalidUser = TestDataManager.getInstance()
                 .getUser("invalidUser");
 
-        LoginPage home = new MenuPage()
+        LoginPage loginPage = new MenuPage()
                 .handleCompatibilityScreen()
                 .navigateToLoginScreen()
                 .enterUserName(invalidUser.getUsername())
                 .enterPassword(invalidUser.getPassword())
                 .loginExpectingFailure();
-        // System.out.println(new LoginPage().errorMessageDisplayed());
-        Assert.assertEquals("Invalid login credentials, please try again", new LoginPage().errorMessageDisplayed());
+        // System.out.println(loginPage.errorMessageDisplayed());
+        Assert.assertEquals(loginPage.errorMessageDisplayed(), "Invalid login credentials, please try again");
     }
 }
