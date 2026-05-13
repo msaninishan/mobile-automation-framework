@@ -6,25 +6,33 @@ import io.appium.java_client.AppiumDriver;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.testng.IConfigurationListener;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import java.io.ByteArrayInputStream;
 
-public class TestListener implements ITestListener {
+public class TestListener implements ITestListener, IConfigurationListener {
+
+    @Override
+    public void onConfigurationFailure(ITestResult result) {
+        // @BeforeMethod/@AfterMethod failed
+        // log it but don't report as test failure in Allure
+        System.out.println("Setup/Teardown failed: " +
+                result.getThrowable().getMessage());
+    }
+
 
     @Override
     public void onTestFailure(ITestResult result) {
         AppiumDriver driver = DriverManager.getDriver();
-        if (driver != null) {
-            byte[] screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-            Allure.addAttachment(
-                    "Screenshot of failure - Attempt " +
-                            (result.getMethod().getCurrentInvocationCount()),
-                    "image/png",
-                    new ByteArrayInputStream(screenShot),
-                    "png");
-        }
+        byte[] screenShot = driver.getScreenshotAs(OutputType.BYTES);
+        Allure.addAttachment(
+                "Screenshot of failure - Attempt " +
+                        (result.getMethod().getCurrentInvocationCount()),
+                "image/png",
+                new ByteArrayInputStream(screenShot),
+                "png");
 
     }
 
