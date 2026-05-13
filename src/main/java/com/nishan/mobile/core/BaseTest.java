@@ -5,19 +5,6 @@ import org.testng.annotations.*;
 
 public class BaseTest {
 
-    @BeforeSuite
-    protected void warmUp() {
-        try {
-            String platform = System.getProperty("platform",
-                    ConfigManager.getInstance().get("platform"));
-            DriverManager.initDriver(platform);
-            System.out.println("Warm up complete");
-            DriverManager.quitDriver();
-        } catch (Exception e) {
-            System.out.println("Warm up absorbed: " + e.getMessage());
-        }
-    }
-
     @BeforeMethod
     @Parameters({"platform"})
     protected void setUp(@Optional String platform) {
