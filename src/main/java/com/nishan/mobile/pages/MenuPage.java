@@ -11,19 +11,20 @@ public class MenuPage extends BasePage {
         return AppiumBy.accessibilityId("Login Screen");
     }
 
-    private By compatabilityScreen() {
+    private By compatibilityScreen() {
         return AppiumBy.id("android:id/button2");
 
     }
 
     public MenuPage handleCompatibilityScreen() {
         if (isAndroid()) {
-            System.out.println("Looking for compatibility screen...");
-            System.out.println("Current page source: " +
-                    driver.getPageSource());
-            WaitUtility.waitForElementClickable(compatabilityScreen());
-            driver.findElement(compatabilityScreen()).click();
-            System.out.println("Compatibility screen dismissed");
+            try {
+                WaitUtility.waitForElementClickable(
+                        compatibilityScreen());
+                driver.findElement(compatibilityScreen()).click();
+            } catch (Exception e) {
+                System.out.println("Compatibility screen not present — continuing");
+            }
         }
         return this;
     }

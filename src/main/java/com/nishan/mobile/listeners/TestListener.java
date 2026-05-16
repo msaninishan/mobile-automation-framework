@@ -22,9 +22,14 @@ public class TestListener implements ITestListener, IConfigurationListener {
                 result.getThrowable().getMessage());
     }
 
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        updateBrowserStackSession("passed", result.getName());
+    }
 
     @Override
     public void onTestFailure(ITestResult result) {
+        updateBrowserStackSession("failed", result.getName());
         AppiumDriver driver = DriverManager.getDriver();
         byte[] screenShot = driver.getScreenshotAs(OutputType.BYTES);
         Allure.addAttachment(
@@ -47,11 +52,24 @@ public class TestListener implements ITestListener, IConfigurationListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
+        updateBrowserStackSession("Skipped", result.getName());
         if (result.getMethod().getRetryAnalyzerClass() != null) {
             // this skip is actually a retry attempt
             // mark it as failed in Allure instead
             result.setStatus(ITestResult.FAILURE);
             onTestFailure(result);
         }
+    }
+
+    private void updateBrowserStackSession(String status, String testName) {
+        // get session ID from driver
+        String sessionId = DriverManager.getDriver()
+                .getSessionId().toString();
+
+        // update via REST API
+        String url = "https://api-cloud.browserstack.com/app-automate/sessions/"
+                + sessionId + ".json";
+
+        // PUT request with status and name
     }
 }

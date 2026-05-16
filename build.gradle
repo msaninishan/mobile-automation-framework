@@ -16,6 +16,7 @@ configurations {
 dependencies {
     // ===== Core Appium =====
     implementation 'io.appium:java-client:9.2.2'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.23.0'
 
     // ===== Test Framework =====
     implementation 'org.testng:testng:7.9.0'
@@ -35,10 +36,21 @@ dependencies {
     aspectj 'org.aspectj:aspectjweaver:1.9.20'
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'org.seleniumhq.selenium:selenium-java:4.23.0'
+        force 'org.seleniumhq.selenium:selenium-remote-driver:4.23.0'
+        force 'org.seleniumhq.selenium:selenium-support:4.23.0'
+    }
+}
 
 test {
     useTestNG() {
         suites 'testng.xml'
     }
     jvmArgs = ["-javaagent:${configurations.aspectj.asPath}"]
+    systemProperty "bs.username", System.getProperty("bs.username")
+    systemProperty "bs.accesskey", System.getProperty("bs.accesskey")
+    systemProperty "execution.env", System.getProperty("execution.env", "local")
+    systemProperty "platform", System.getProperty("platform", "android")
 }

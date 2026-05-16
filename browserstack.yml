@@ -1,0 +1,16 @@
+userName: nishanms_zDlRFC
+accessKey: sxZUfGSqGpH4pzxVy9mi
+
+app: bs://ecb36687cdaf20971e96af1d778624427572ec3c
+
+platforms:
+  - platformName: android
+    deviceName: .*
+    osVersion: 13.0
+
+projectName: Mobile Automation Framework
+buildName: Android Build
+sessionName: Login Tests
+
+debug: true
+networkLogs: true
