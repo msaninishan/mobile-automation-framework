@@ -10,6 +10,10 @@ import java.util.function.Supplier;
 
 public class DriverManager {
     private static final ThreadLocal<AppiumDriver> driverThreadLocal = new ThreadLocal<>();
+    // ThreadLocal required for parallel platform execution.
+// When Android + iOS run simultaneously, each thread needs
+// its own platform context for isAndroid()/isIOS() in BasePage.
+// Do NOT replace with static String — causes silent locator failures.
     private static final ThreadLocal<String> platformThread = new ThreadLocal<>();
 
     private static final Map<String, Supplier<DriverFactory>> LOCAL_REGISTRY = Map.of(
